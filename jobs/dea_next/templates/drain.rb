@@ -37,7 +37,7 @@ class DEADrainer
     if job_change == "job_shutdown"
       evacuate
     elsif staging_tasks.empty?
-      clean_shutdown
+      soft_shutdown
     else
       disable_dea
     end
@@ -88,8 +88,8 @@ class DEADrainer
 
   def snapshot
     @snapshot ||=
-      if File.exists?(snapshot_path)
-        JSON.load(File.open(snapshot_path))
+      if File.exists?(SNAPSHOT_PATH)
+        JSON.load(File.open(SNAPSHOT_PATH))
       end
   end
 
@@ -112,4 +112,4 @@ class DEADrainer
   end
 end
 
-Drainer.new(ARGV).drain
+DEADrainer.new(ARGV).drain
